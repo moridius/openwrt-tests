@@ -5,6 +5,13 @@
         name: "{{ inventory_hostname }}"
       become: yes
 
+    - name: Write hostname to /etc/hosts
+      ansible.builtin.replace:
+        path: /etc/hosts
+        regexp: '127\.0\.0\.1\s.+'
+        replace: "127.0.0.1\t{{ inventory_hostname }}"
+      become: yes
+
     - name: Install required packages
       apt:
         name:
